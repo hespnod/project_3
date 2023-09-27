@@ -46,20 +46,6 @@ const Login = (props) => {
   //     setFormIsValid(true);
   //   }
   // }, [enteredEmail, enteredPassword, enteredCollege]);
-  const { isValid: emailIsValid } = emailState;
-  const { isValid: passwordIsValid } = passwordState;
-  useEffect(() => {
-    const identifier = setTimeout(() => {
-      console.log('Checking form validity!');
-      setFormIsValid(emailIsValid && passwordIsValid);
-    }, 500);
-
-    return () => {
-      console.log('CLEANUP');
-      clearTimeout(identifier);
-    };
-  }, [emailIsValid, passwordIsValid]);
-
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: "USER_INPUT", val: event.target.value });
   };
@@ -132,7 +118,7 @@ const Login = (props) => {
           />
         </div>
         <div className={classes.actions}>
-          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+          <Button type="submit" className={classes.btn} disabled={!(passwordState.isValid && emailState.isValid)}>
             Login
           </Button>
         </div>
